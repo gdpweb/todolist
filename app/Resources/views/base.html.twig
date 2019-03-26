@@ -32,42 +32,44 @@
 <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
     <div class="container">
         <div class="navbar-header">
+            <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" class="pull-left" alt="OpenClassrooms"/>
             <a class="navbar-brand" href="{{ path('homepage') }}">To Do List app</a>
-            <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/>
         </div>
 
         <div class="collapse navbar-collapse" id="todo-navbar-collapse">
-            <ul class="nav navbar-nav">
+            {% if app.user %}
+                <ul class="nav navbar-nav">
 
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fas fa-book"></i><span> Tâches</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ path('task_create') }}">
-                                <span>Créer une nouvelle tâche</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('task_list') }}">
-                                <span>Liste des tâches à faire</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('task_list') }}">
-                                <span>Liste des tâches terminées</span>
-                            </a>
-                        </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-book"></i><span> Tâches</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path('task_create') }}">
+                                    <span>Créer une nouvelle tâche</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('tasks_status_todo') }}">
+                                    <span>Liste des tâches à faire</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('tasks_status_done') }}">
+                                    <span>Liste des tâches terminées</span>
+                                </a>
+                            </li>
 
-                    </ul>
-                </li>
-
-                <li {% if app.request.get('_route') == 'user_list' %} class="active" {% endif %}>
-                    <a href="{{ path('user_list') }}"><i class="fas fa-cog"></i> Administration</a>
-                </li>
-            </ul>
-
+                        </ul>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li {% if app.request.get('_route') == 'user_list' %} class="active" {% endif %}>
+                        <a href="{{ path('user_list') }}"><i class="fas fa-cog"></i> Administration</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            {% endif %}
             <ul class="nav navbar-nav navbar-right">
                 {% if app.user %}
                     <li>

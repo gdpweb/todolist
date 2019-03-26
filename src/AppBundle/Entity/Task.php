@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
  * @ORM\Table
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TaskRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Task
@@ -43,7 +43,7 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
