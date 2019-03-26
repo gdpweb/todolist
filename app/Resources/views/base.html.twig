@@ -46,8 +46,8 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="{{ path('task_create') }}">
-                                    <span>Créer une nouvelle tâche</span>
+                                <a href="{{ path('task_list') }}">
+                                    <span>Liste des tâches</span>
                                 </a>
                             </li>
                             <li>
@@ -58,6 +58,12 @@
                             <li>
                                 <a href="{{ path('tasks_status_done') }}">
                                     <span>Liste des tâches terminées</span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{{ path('task_create') }}">
+                                    <span>Créer une nouvelle tâche</span>
                                 </a>
                             </li>
 

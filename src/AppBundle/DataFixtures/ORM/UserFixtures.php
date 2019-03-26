@@ -30,7 +30,7 @@ class UserFixtures extends Fixture
         $password = $this->encoder->encodePassword($user, 'todolist');
         $user->setPassword($password);
         $user->setEmail('admin@gdpweb.fr');
-        $user->setRoles(['ROLE_USER,ROLE_ADMIN']);
+        $user->setRoles(['ROLE_ADMIN']);
         $manager->persist($user);
 
         $user = new User();

@@ -88,7 +88,6 @@ class TaskController extends Controller
     public function editAction(Task $task, Request $request)
     {
         $form = $this->createForm(TaskType::class, $task);
-
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -96,9 +95,8 @@ class TaskController extends Controller
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
-            return $this->redirectToRoute('tasks_status_todo');
+            return $this->redirectToRoute('task_list');
         }
-
         return $this->render('task/edit.html.twig', [
             'form' => $form->createView(),
             'task' => $task,
@@ -129,12 +127,16 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+        if ($this->getUser() === $task->getUser() or ($task->getUser() === null and $this->isGranted('ROLE_ADMIN'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($task);
+            $em->flush();
+            $this->addFlash('success', 'La tâche a bien été supprimée.');
+        } else {
+            $this->addFlash('danger', 'Vous ne pouvez pas supprimer cette tâche');
+        }
 
-        return $this->redirectToRoute('tasks_status_todo');
+        return $this->redirectToRoute('task_list');
     }
 }
