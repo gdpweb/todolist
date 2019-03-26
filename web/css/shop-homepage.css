@@ -48,7 +48,13 @@ body {
     padding: 9px;
     color: #333;
 }
-
+.caption-form{
+    text-align: right;
+    margin: 5px;
+}
+.caption-form>form{
+    display: inline-block;
+}
 footer {
     margin: 50px 0;
 }

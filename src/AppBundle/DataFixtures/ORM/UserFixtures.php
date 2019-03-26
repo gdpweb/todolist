@@ -33,6 +33,14 @@ class UserFixtures extends Fixture
         $user->setRoles(['ROLE_USER,ROLE_ADMIN']);
         $manager->persist($user);
 
+        $user = new User();
+        $user->setUsername('anonyme');
+        $password = $this->encoder->encodePassword($user, 'todolist');
+        $user->setPassword($password);
+        $user->setEmail('anonyme@gdpweb.fr');
+        $user->setRoles(['ROLE_USER']);
+        $manager->persist($user);
+
         for ($i = 1; $i < 5; ++$i) {
             $user = new User();
             $user->setUsername('user'.$i);

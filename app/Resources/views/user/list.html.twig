@@ -7,7 +7,8 @@
 {% block body %}
     {% if users|length == 0 %}
         <div class="alert alert-warning" role="alert">
-            Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('user_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
+            Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('user_create') }}"
+                                                             class="btn btn-warning pull-right">Créer un utilisateur</a>
         </div>
     {% else %}
         <div class="row">
@@ -33,6 +34,12 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <div class="row">
+                <div class=navrm-group">
+                    <a href="{{ path('user_create') }}" class="btn btn-primary"><span class="fas fa-user"></span> Créer
+                        un utilisateur</a>
+                </div>
+            </div>
         </div>
     {% endif %}
 {% endblock %}

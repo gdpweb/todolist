@@ -14,13 +14,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager)
     {
-
         for ($i = 1; $i < 5; ++$i) {
             $task = new Task();
             $task->setTitle('Tâche n°'.$i);
