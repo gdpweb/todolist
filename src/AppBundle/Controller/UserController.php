@@ -13,11 +13,13 @@ class UserController extends Controller
 {
     /**
      * @Route("/users", name="user_list")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function listAction(Request $request)
+    public function listAction()
     {
+        $users = $this->getDoctrine()->getRepository('AppBundle:User')->findByStatus();
         return $this->render('user/list.html.twig', [
-            'users' => $this->getDoctrine()->getRepository('AppBundle\Entity\User')->findAll()
+            'users' => $users
         ]);
     }
 

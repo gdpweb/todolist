@@ -17,20 +17,8 @@ class TaskController extends Controller
      */
     public function listAction()
     {
-        return $this->render(
-            'task/list.html.twig',
-            ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]
-        );
-    }
-
-    /**
-     * @Route("/tasks/done", name="tasks_status_done")
-     * @Security("is_granted('ROLE_USER')")
-     */
-    public function listStatusDoneAction()
-    {
-        $title = "Liste des tâches terminées";
-        $tasks = $this->getDoctrine()->getRepository('AppBundle\Entity\Task')->findByStatus(1);
+        $title = "Liste des tâches à réaliser";
+        $tasks = $this->getDoctrine()->getRepository('AppBundle\Entity\Task')->findByStatus(0);
         return $this->render('task/list.html.twig',
             [
                 'tasks' => $tasks,
@@ -40,13 +28,13 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/tasks/todo", name="tasks_status_todo")
+     * @Route("/tasks/done", name="task_status_done")
      * @Security("is_granted('ROLE_USER')")
      */
-    public function listStatusTodoAction()
+    public function listStatusDoneAction()
     {
-        $title = "Liste des tâches à réaliser";
-        $tasks = $this->getDoctrine()->getRepository('AppBundle\Entity\Task')->findByStatus(0);
+        $title = "Liste des tâches terminées";
+        $tasks = $this->getDoctrine()->getRepository('AppBundle\Entity\Task')->findByStatus(1);
         return $this->render('task/list.html.twig',
             [
                 'tasks' => $tasks,
@@ -75,7 +63,7 @@ class TaskController extends Controller
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
-            return $this->redirectToRoute('tasks_status_todo');
+            return $this->redirectToRoute('task_list');
         }
 
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
@@ -114,11 +102,10 @@ class TaskController extends Controller
 
         if ($task->isDone()) {
             $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
-            return $this->redirectToRoute('tasks_status_todo');
         } else {
             $this->addFlash('warning', sprintf('La tâche %s a bien été marquée comme non faite.', $task->getTitle()));
-            return $this->redirectToRoute('tasks_status_done');
         }
+        return $this->redirectToRoute('task_list');
     }
 
     /**

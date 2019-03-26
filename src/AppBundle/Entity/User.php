@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table("user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @UniqueEntity("email")
  */
 class User implements UserInterface
@@ -27,7 +27,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
      */
-    private $username;
+    public $username;
 
     /**
      * @ORM\Column(type="string", length=64)
@@ -122,12 +122,12 @@ class User implements UserInterface
     /**
      * @return Collection|Task[]
      */
-    public function getTasks(): Collection
+    public function getTasks()
     {
         return $this->tasks;
     }
 
-    public function addTask(Task $task): self
+    public function addTask(Task $task)
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks[] = $task;
@@ -137,7 +137,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeTask(Task $task): self
+    public function removeTask(Task $task)
     {
         if ($this->tasks->contains($task)) {
             $this->tasks->removeElement($task);

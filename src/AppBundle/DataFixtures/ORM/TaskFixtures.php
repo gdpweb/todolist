@@ -26,6 +26,10 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             $task->setUser($user);
             $manager->persist($task);
         }
+        $task = new Task();
+        $task->setTitle('Tâche n°5');
+        $task->setContent('Ceci est la tâche n°5');
+        $manager->persist($task);
         $manager->flush();
     }
     public function getDependencies()

@@ -13,12 +13,18 @@ use Doctrine\ORM\EntityRepository;
 
 class TaskRepository extends EntityRepository
 {
-    public function findByStatus($status)
+    public function findByStatus($status = null)
     {
-        return $this->createQueryBuilder('a')
-            ->where('a.isDone=:status')
-            ->setParameter('status', $status)
-            ->getQuery()->getResult();
+        $query = $this->createQueryBuilder('a');
+
+        if ($status !== null) {
+            $query->where('a.isDone=:status')
+                ->setParameter('status', $status);
+
+        }
+        $query->orderBy('a.isDone', 'ASC');
+
+        return $query->getQuery()->getResult();
 
     }
 }
