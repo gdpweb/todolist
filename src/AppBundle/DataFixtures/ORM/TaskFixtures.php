@@ -10,12 +10,12 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Task;
-use AppBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class TaskFixtures extends Fixture
+
+class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
 
     public function load(ObjectManager $manager)
@@ -23,17 +23,18 @@ class TaskFixtures extends Fixture
 
         for ($i = 1; $i < 5; ++$i) {
             $task = new Task();
-            $task->getTitle('Tâche n°'.$i);
-            $task->getContent('Ceci est la tâche n°'.$i);
-            $task->
-            $user->setUsername('user'.$i);
-            $password = $this->encoder->encodePassword($user, 'todolist');
-            $user->setPassword($password);
-            $user->setEmail('user'.$i.'@gdpweb.fr');
-            $user->setRoles(['ROLE_USER']);
-            $this->addReference('user'.$i, $user);
-            $manager->persist($user);
+            $task->setTitle('Tâche n°'.$i);
+            $task->setContent('Ceci est la tâche n°'.$i);
+            $user = $this->getReference('user'.mt_rand(1, 4));
+            $task->setUser($user);
+            $manager->persist($task);
         }
         $manager->flush();
+    }
+    public function getDependencies()
+    {
+        return array(
+            UserFixtures::class,
+        );
     }
 }
