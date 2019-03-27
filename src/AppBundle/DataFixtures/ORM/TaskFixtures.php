@@ -11,18 +11,18 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Task;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class TaskFixtures extends Fixture implements DependentFixtureInterface
+class TaskFixtures extends Fixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
         for ($i = 1; $i < 5; ++$i) {
             $task = new Task();
-            $task->setTitle('Tâche n°'.$i);
-            $task->setContent('Ceci est la tâche n°'.$i);
-            $user = $this->getReference('user'.mt_rand(1, 4));
+            $task->setTitle('Tâche n°' . $i);
+            $task->setContent('Ceci est la tâche n°' . $i);
+            $user = $this->getReference('user' . mt_rand(1, 4));
             $task->setUser($user);
             $manager->persist($task);
         }
@@ -32,10 +32,9 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($task);
         $manager->flush();
     }
-    public function getDependencies()
+
+    public function getOrder()
     {
-        return array(
-            UserFixtures::class,
-        );
+        return 1;
     }
 }

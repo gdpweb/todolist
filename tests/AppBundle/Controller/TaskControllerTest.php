@@ -60,7 +60,6 @@ class TaskControllerTest extends WebTestCase
 
     public function testCreateAction()
     {
-
         $crawler = $this->client->request('GET', '/tasks/create');
         $form = $crawler->selectButton('Ajouter')->form();
         $form['task[title]'] = $this->task;
@@ -71,7 +70,6 @@ class TaskControllerTest extends WebTestCase
 
     public function testEditAction()
     {
-
         $taskManager = $this->em->getRepository('AppBundle:Task');
         /** @var Task $task */
         $task = $taskManager->findOneBy(['title' => $this->task]);
@@ -83,7 +81,6 @@ class TaskControllerTest extends WebTestCase
     }
     public function testToggleTaskAction()
     {
-
         $taskManager = $this->em->getRepository('AppBundle:Task');
         /** @var Task $task */
         $task = $taskManager->findOneBy(['title' => $this->task]);
@@ -91,18 +88,18 @@ class TaskControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->request('GET', '/tasks/' . $task->getId() . '/toggle');
         $this->assertTrue($this->client->getResponse()->isRedirect());
-
     }
     public function testDeleteAction()
     {
-
         $taskManager = $this->em->getRepository('AppBundle:Task');
         /** @var Task $task */
         $task = $taskManager->findOneBy(['title' => $this->task]);
         $this->client->request('GET', '/tasks/' . $task->getId() . '/delete');
-
         $this->assertTrue($this->client->getResponse()->isRedirect());
 
+        $task = $taskManager->findOneBy(['title' => 'Tâche n°5']);
+        $this->client->request('GET', '/tasks/' . $task->getId() . '/delete');
+        $this->assertTrue($this->client->getResponse()->isRedirect());
     }
 
 
@@ -113,7 +110,7 @@ class TaskControllerTest extends WebTestCase
         $firewall = 'main';
         $userManager = $this->em->getRepository('AppBundle:User');
         /** @var User $user */
-        $user = $userManager->findOneBy(['username' => 'admin']);
+        $user = $userManager->findOneBy(['username' => 'user1']);
         $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
         $session->set('_security_' . $firewall, serialize($token));
         $session->save();

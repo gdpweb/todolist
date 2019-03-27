@@ -8,7 +8,6 @@
 
 namespace AppBundle\Repository;
 
-
 use Doctrine\ORM\EntityRepository;
 
 class TaskRepository extends EntityRepository
@@ -20,11 +19,9 @@ class TaskRepository extends EntityRepository
         if ($status !== null) {
             $query->where('a.isDone=:status')
                 ->setParameter('status', $status);
-
         }
         $query->orderBy('a.isDone', 'ASC');
 
         return $query->getQuery()->getResult();
-
     }
 }

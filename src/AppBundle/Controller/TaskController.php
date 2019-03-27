@@ -19,7 +19,8 @@ class TaskController extends Controller
     {
         $title = "Liste des tâches à réaliser";
         $tasks = $this->getDoctrine()->getRepository('AppBundle\Entity\Task')->findByStatus(0);
-        return $this->render('task/list.html.twig',
+        return $this->render(
+            'task/list.html.twig',
             [
                 'tasks' => $tasks,
                 'title' => $title
@@ -35,7 +36,8 @@ class TaskController extends Controller
     {
         $title = "Liste des tâches terminées";
         $tasks = $this->getDoctrine()->getRepository('AppBundle\Entity\Task')->findByStatus(1);
-        return $this->render('task/list.html.twig',
+        return $this->render(
+            'task/list.html.twig',
             [
                 'tasks' => $tasks,
                 'title' => $title
@@ -114,7 +116,6 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
-
         if ($this->getUser() === $task->getUser() or ($task->getUser() === null and $this->isGranted('ROLE_ADMIN'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($task);

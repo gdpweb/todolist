@@ -11,6 +11,7 @@ namespace Tests\AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -35,7 +36,7 @@ class UserControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-        $this->newUser = 1000;
+        $this->newUser = uniqid();
         $this->logIn();
     }
 
@@ -57,7 +58,6 @@ class UserControllerTest extends WebTestCase
 
     public function testCreateAction()
     {
-
         $crawler = $this->client->request('GET', '/users/create');
         $form = $crawler->selectButton('Ajouter')->form();
         $form['user[username]'] = $this->newUser;
@@ -71,10 +71,9 @@ class UserControllerTest extends WebTestCase
 
     public function testEditAction()
     {
-
         $userManager = $this->em->getRepository('AppBundle:User');
         /** @var User $user */
-        $user = $userManager->findOneBy(['username' => $this->newUser]);
+        $user = $userManager->findOneBy(['username' => 'admin']);
         $crawler = $this->client->request('GET', '/users/' . $user->getId() . '/edit');
 
         $form['user[password][first]'] = 'todolist';
@@ -83,7 +82,6 @@ class UserControllerTest extends WebTestCase
         $form = $crawler->selectButton('Modifier')->form();
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
-
     }
 
     private function logIn()

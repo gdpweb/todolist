@@ -11,10 +11,11 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
     private $encoder;
 
@@ -43,14 +44,19 @@ class UserFixtures extends Fixture
 
         for ($i = 1; $i < 5; ++$i) {
             $user = new User();
-            $user->setUsername('user'.$i);
+            $user->setUsername('user' . $i);
             $password = $this->encoder->encodePassword($user, 'todolist');
             $user->setPassword($password);
-            $user->setEmail('user'.$i.'@gdpweb.fr');
+            $user->setEmail('user' . $i . '@gdpweb.fr');
             $user->setRoles(['ROLE_USER']);
-            $this->addReference('user'.$i, $user);
+            $this->addReference('user' . $i, $user);
             $manager->persist($user);
         }
         $manager->flush();
+    }
+
+    public function getOrder()
+    {
+        return 0;
     }
 }

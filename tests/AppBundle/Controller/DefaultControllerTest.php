@@ -3,12 +3,15 @@
 namespace Tests\AppBundle\Controller;
 
 use AppBundle\DataFixtures\ORM\TaskFixtures;
+use AppBundle\DataFixtures\ORM\UserFixtures;
 use AppBundle\Entity\User;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-
 
 class DefaultControllerTest extends WebTestCase
 {
@@ -24,8 +27,15 @@ class DefaultControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+        $encoder = $this->client->getContainer()->get('security.password_encoder');
 
-       $fixtures = new TaskFixtures();
+        $loader = new Loader();
+        $loader->addFixture(new UserFixtures($encoder));
+        $loader->addFixture(new TaskFixtures());
+
+        $purger = new ORMPurger($this->em);
+        $executor = new ORMExecutor($this->em, $purger);
+        $executor->execute($loader->getFixtures());
     }
 
     /**
