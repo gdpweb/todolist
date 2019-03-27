@@ -5,12 +5,9 @@
 {% block header_title %}<h1>Liste des utilisateurs</h1>{% endblock %}
 
 {% block body %}
-    {% if users|length == 0 %}
-        <div class="alert alert-warning" role="alert">
-            Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('user_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
-        </div>
-    {% else %}
-        <div class="row">
+
+    <div class="row">
+        <div class="col-md-12">
             <table class="table">
                 <thead>
                 <tr>
@@ -21,18 +18,26 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 {% for user in users %}
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
                         <td>
-                            <a href="{{ path('user_edit', {'id' : user.id}) }}" class="btn btn-success btn-sm">Edit</a>
+                            <a href="{{ path('user_edit', {'id' : user.id}) }}"
+                               class="btn btn-success btn-sm">Edit</a>
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
-    {% endif %}
+        <div class="row">
+            <div class=navrm-group">
+                <a href="{{ path('user_create') }}" class="btn btn-primary"><span class="fas fa-user"></span> Créer
+                    un utilisateur</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
