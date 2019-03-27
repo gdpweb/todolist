@@ -28,6 +28,7 @@ class AppKernel extends Kernel
                 $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
                 $bundles[] = new \Symfony\Bundle\MakerBundle\MakerBundle();
                 $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+                $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
             }
         }
 
