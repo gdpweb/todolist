@@ -1,8 +1,8 @@
-#ToDoList
+# ToDoList
 
 This project has been realized as part of project 8 **Openclassroom** training.
 
-###Server Requirements of the Web App
+### Server Requirements of the Web App
 - Application Server PHP 5.5.9 or higher
 - Database MySQL >= 5.7.11
 
@@ -56,5 +56,5 @@ Licence
 --------
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-####Maintainability
+#### Maintainability
 [![Maintainability](https://api.codeclimate.com/v1/badges/367bdbd4f6566ce810be/maintainability)](https://codeclimate.com/github/gdpweb/todolist/maintainability)
