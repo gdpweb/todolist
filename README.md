@@ -57,4 +57,6 @@ Licence
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 #### Maintainability
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/367bdbd4f6566ce810be/maintainability)](https://codeclimate.com/github/gdpweb/todolist/maintainability)
+
