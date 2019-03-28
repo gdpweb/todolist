@@ -1,0 +1,11 @@
+
+languages:
+  PHP: true
+exclude_patterns:
+  - "app/"
+  - "bin/"
+  - "tests/"
+  - "spec/"
+  - "vendor/"
+  - "var/"
+  - "web/"
