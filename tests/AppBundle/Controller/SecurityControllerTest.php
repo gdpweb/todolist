@@ -29,6 +29,8 @@ class SecurityControllerTest extends WebTestCase
     {
         return [
             ['/login', 200],
+            ['/logout', 302],
+            ['/login_check', 500],
         ];
     }
 
@@ -40,11 +42,5 @@ class SecurityControllerTest extends WebTestCase
         $form['_password'] = 'todolist';
         $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirection());
-    }
-
-    public function testLogoutCheckAction()
-    {
-        $this->client->request('GET', '/logout');
-        $this->assertTrue($this->client->getResponse()->isRedirect('http://localhost/'));
     }
 }
