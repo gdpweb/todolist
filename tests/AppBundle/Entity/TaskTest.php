@@ -12,16 +12,15 @@ use AppBundle\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-
 class TaskTest extends WebTestCase
 {
-
-    private function getKernel()
+    private function getValidator()
     {
         $kernel = $this->createKernel();
         $kernel->boot();
-        return $kernel;
+        return $kernel->getContainer()->get('validator');
     }
+
 
     public function testDateNewTask()
     {
@@ -37,20 +36,15 @@ class TaskTest extends WebTestCase
 
     public function testTaskValidator()
     {
-        $kernel = $this->getKernel();
-        $validator = $kernel->getContainer()->get('validator');
-
         /**
          * @var ConstraintViolationListInterface $violationList
          */
-        $violationList = $validator->validate(new Task());
+        $violationList = $this->getValidator()->validate(new Task());
 
         $this->assertEquals(2, $violationList->count());
         // or any other like:
         $this->assertEquals('Vous devez saisir un titre.', $violationList[0]->getMessage());
 
         $this->assertEquals('Vous devez saisir du contenu.', $violationList[1]->getMessage());
-
     }
-
 }

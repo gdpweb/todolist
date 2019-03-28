@@ -15,6 +15,7 @@
 
     <testsuites>
         <testsuite name="Project Test TodoList">
+            <directory>tests/AppBundle/Entity/UserTest.php</directory>
             <directory>tests/AppBundle/Entity/TaskTest.php</directory>
             <directory>tests/AppBundle/Fixtures/FixturesTest.php</directory>
             <directory>tests/AppBundle/Controller/DefaultControllerTest.php</directory>
