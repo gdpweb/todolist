@@ -6,6 +6,7 @@
         "psr-4": {
             "": "src/"
         },
+        "optimize-autoloader": true,
         "classmap": [
             "app/AppKernel.php",
             "app/AppCache.php"

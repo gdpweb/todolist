@@ -27,15 +27,6 @@ class DefaultControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-        $encoder = $this->client->getContainer()->get('security.password_encoder');
-
-        $loader = new Loader();
-        $loader->addFixture(new UserFixtures($encoder));
-        $loader->addFixture(new TaskFixtures());
-
-        $purger = new ORMPurger($this->em);
-        $executor = new ORMExecutor($this->em, $purger);
-        $executor->execute($loader->getFixtures());
     }
 
     /**
