@@ -6,9 +6,11 @@
 
 {% block body %}
     <div class="container">
-    <div class="row">
-        <a href="{{ path('task_create') }}" class="btn btn-success">Créer une nouvelle tâche</a>
-        <a href="{{ path('task_list') }}" class="btn btn-info">Consulter la liste des tâches à faire</a>
-        <a href="{{ path('task_status_done') }}" class="btn btn-primary">Consulter la liste des tâches terminées</a>
+        <div>{{ 'now'|date('d:/m/y h:i:s') }}</div>
+        <div class="row">
+            <a href="{{ path('task_create') }}" class="btn btn-success">Créer une nouvelle tâche</a>
+            <a href="{{ path('task_list') }}" class="btn btn-info">Consulter la liste des tâches à faire</a>
+            <a href="{{ path('task_status_done') }}" class="btn btn-primary">Consulter la liste des tâches terminées</a>
+        </div>
     </div>
 {% endblock %}

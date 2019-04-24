@@ -20,13 +20,17 @@ class TaskController extends Controller
     {
         $title = "Liste des tâches à réaliser";
         $tasks = $this->getDoctrine()->getRepository('AppBundle\Entity\Task')->findByStatus(0);
-        return $this->render(
+
+        $response = $this->render(
             'task/list.html.twig',
             [
                 'tasks' => $tasks,
                 'title' => $title
             ]
         );
+        $response->setSharedMaxAge(3600);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        return $response;
     }
 
     /**
@@ -37,13 +41,16 @@ class TaskController extends Controller
     {
         $title = "Liste des tâches terminées";
         $tasks = $this->getDoctrine()->getRepository('AppBundle\Entity\Task')->findByStatus(1);
-        return $this->render(
+        $response =  $this->render(
             'task/list.html.twig',
             [
                 'tasks' => $tasks,
                 'title' => $title
             ]
         );
+        $response->setSharedMaxAge(3600);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        return $response;
     }
 
     /**
@@ -69,7 +76,10 @@ class TaskController extends Controller
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
+        $response =  $this->render('task/create.html.twig', ['form' => $form->createView()]);
+        $response->setSharedMaxAge(3600);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        return $response;
     }
 
     /**
@@ -88,10 +98,13 @@ class TaskController extends Controller
 
             return $this->redirectToRoute('task_list');
         }
-        return $this->render('task/edit.html.twig', [
+        $response =  $this->render('task/edit.html.twig', [
             'form' => $form->createView(),
             'task' => $task,
         ]);
+        $response->setSharedMaxAge(3600);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        return $response;
     }
 
     /**
